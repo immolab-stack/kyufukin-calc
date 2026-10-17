@@ -33,13 +33,26 @@ a{color:var(--green)}
 .wrap{max-width:680px;margin:0 auto;padding:0 16px}
 .pr{font-size:.8rem;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}
 .site{display:flex;flex-wrap:wrap;gap:2px 16px;justify-content:space-between;align-items:baseline;padding:14px 0 0;font-size:.9rem;color:var(--muted)}
-@media(max-width:480px){.slip td:first-child{font-size:.88rem}.slip .big td{font-size:1rem}.slip .big .net{font-size:1.25rem}}
+.slip .stage td:first-child{font-family:"BIZ UDPGothic",sans-serif}
+}
 .site b{color:var(--ink)}
 
 /* hero */
 .hero{padding:28px 0 8px}
 .hero h1{font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.3;margin:0 0 14px;letter-spacing:.01em}
 .hero p{margin:0;color:var(--muted);max-width:36em}
+.example{
+  margin:18px 0 0;background:var(--paper);border:1px solid var(--line);border-radius:4px;
+  padding:14px 16px;font-family:"BIZ UDGothic",monospace;font-variant-numeric:tabular-nums;
+  display:grid;grid-template-columns:1fr auto;gap:2px 12px;align-items:baseline
+}
+.example .cap{grid-column:1/-1;font-family:"BIZ UDPGothic",sans-serif;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+.example .from{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
+.example .to{font-size:1.6rem;font-weight:700;color:var(--green)}
+.example small{grid-column:1/-1;font-family:"BIZ UDPGothic",sans-serif;font-size:.78rem;color:var(--muted);margin-top:4px}
+.next{margin-top:14px;padding:16px;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.next p{margin:0 0 10px;font-size:.95rem}
+.next a{display:inline-block;padding:11px 18px;border-radius:6px;background:var(--green);color:#fff;text-decoration:none;font-weight:700}
 
 /* calculator */
 .calc{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:24px 0;padding:22px 18px}
@@ -127,6 +140,15 @@ footer p{margin:0 0 8px}
   .result.show{animation:rise .35s ease-out}
   @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 }
+@media(max-width:480px){
+  .slip table,.slip tbody,.slip tr{display:block}
+  .slip tr.fee{display:flex;justify-content:space-between;border-bottom:1px dashed var(--line)}
+  .slip tr.fee td{border:0}
+  .slip .stage{border-bottom:1px dashed var(--line);padding:6px 0}
+  .slip .stage td{display:block;border:0;padding:0}
+  .slip .stage td:last-child{text-align:right;padding-top:2px}
+  .slip .big td{font-size:1rem}
+  .slip .big .net{font-size:1.4rem}
 </style>
 </head>
 <body>
@@ -137,6 +159,12 @@ footer p{margin:0 0 8px}
   <header class="hero">
     <h1>そのITスクール、給付金を使うと実質いくら？</h1>
     <p>厚生労働省の「専門実践教育訓練給付金」は、条件を満たすと受講料の最大80%（年間上限64万円）が支給される制度です。4つの質問に答えると、対象になりそうか、実質いくらになるかを計算します。</p>
+    <div class="example" aria-label="計算例">
+      <span class="cap">例：受講料65万7,000円の講座（RUNTEQ Web開発スタンダード・転職向け）</span>
+      <span>受講料</span><span class="from">657,000円</span>
+      <span>給付金80%の場合</span><span class="to">実質131,400円</span>
+      <small>80%は、修了後の就職と賃金アップなどの条件を満たした場合です。給付金は受講後に申請して受け取ります。</small>
+    </div>
   </header>
 
   <form class="calc" id="calc" novalidate>
@@ -310,6 +338,9 @@ footer p{margin:0 0 8px}
         '<small>' + s.note + '／給付額 ' + yen(paid) + '</small></td><td class="net">実質 ' + yen(fee - paid) + '</td></tr>';
     });
     html += '</table><p class="slip-note">年間上限（50%は40万円、70%は56万円、80%は64万円）を期間の年数分として計算した目安です。給付金は受講後に本人が申請して受け取ります。</p></div>';
+    html += el.ok
+      ? '<div class="next"><p>給付金の対象講座があるスクールでは、無料相談で「自分が対象になるか」「申請の流れ」まで確認できます。</p><a href="#schools">対象講座があるスクールを見る</a></div>'
+      : '<div class="next"><p>対象外でも、スクールによっては分割払いや別の支援制度が使える場合があります。</p><a href="#schools">スクールの情報を見る</a></div>';
 
     out.innerHTML = html;
     out.hidden = false;
