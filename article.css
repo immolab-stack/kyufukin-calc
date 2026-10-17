@@ -1,0 +1,36 @@
+:root{
+  --bg:#eef3f1;--paper:#ffffff;--ink:#172624;--muted:#566663;--line:#cfd9d6;
+  --green:#0b7a5f;--green-soft:#e1f1ec;--focus:#1f5fbf;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"BIZ UDPGothic",system-ui,sans-serif;font-size:16px;line-height:1.85}
+a{color:var(--green)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+.pr{font-size:.8rem;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line);margin:0}
+.site{display:flex;flex-wrap:wrap;gap:2px 16px;justify-content:space-between;align-items:baseline;padding:14px 0 0;font-size:.9rem}
+.site a{color:var(--ink);font-weight:700;text-decoration:none}
+.site span{color:var(--muted)}
+article{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:20px 0;padding:24px 20px}
+article h1{font-size:clamp(1.4rem,5vw,1.9rem);line-height:1.35;margin:0 0 10px}
+.meta{font-size:.85rem;color:var(--muted);margin:0 0 18px}
+article h2{font-size:1.2rem;margin:30px 0 8px;padding-left:10px;border-left:4px solid var(--green)}
+article p{margin:0 0 14px}
+article ul,article ol{margin:0 0 14px;padding-left:1.4em}
+article li{margin-bottom:6px}
+table{width:100%;border-collapse:collapse;margin:0 0 16px;font-size:.92rem}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:#f4f8f6}
+.view{background:var(--green-soft);border-radius:6px;padding:14px 16px;margin:0 0 16px}
+.view b{display:block;margin-bottom:4px}
+.view p:last-child{margin:0}
+.src{font-size:.85rem;color:var(--muted)}
+.src ul{padding-left:1.2em}
+.cta{display:block;text-align:center;margin:22px 0 4px;padding:14px;border-radius:6px;background:var(--green);color:#fff;text-decoration:none;font-weight:700}
+.list{list-style:none;padding:0;margin:0}
+.list li{border-bottom:1px solid var(--line);padding:10px 0}
+.list li:last-child{border-bottom:0}
+footer{border-top:1px solid var(--line);padding:20px 0 40px;font-size:.85rem;color:var(--muted)}
+footer p{margin:0 0 8px}
+@media(max-width:480px){article{padding:20px 16px}table{font-size:.85rem}th,td{padding:6px}}

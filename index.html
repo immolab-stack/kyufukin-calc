@@ -129,6 +129,12 @@ section.block>p{margin:0 0 14px;color:var(--muted)}
 }
 .cta[aria-disabled="true"]{background:#8a9693;pointer-events:none}
 
+.guide-list{list-style:none;padding:0;margin:0;background:var(--paper);border:1px solid var(--line);border-radius:6px}
+.guide-list li{border-bottom:1px solid var(--line)}
+.guide-list li:last-child{border-bottom:0}
+.guide-list a{display:block;padding:12px 16px;color:var(--ink);text-decoration:none}
+.guide-list a:hover{color:var(--green)}
+
 /* faq */
 details{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
 summary{cursor:pointer;padding:12px 16px;font-weight:700}
@@ -253,6 +259,18 @@ footer p{margin:0 0 8px}
     </article>
   </section>
 
+  <section class="block" id="guide">
+    <h2>給付金の解説</h2>
+    <p>手続きの順番や、いつ受け取れるかなど、申し込む前に知っておきたいことをまとめました。</p>
+    <ul class="guide-list">
+      <li><a href="articles/seido.html">専門実践教育訓練給付金とは？給付率と対象になる人</a></li>
+      <li><a href="articles/tetsuzuki.html">受講前に必要な手続き（受講開始の2週間前まで）</a></li>
+      <li><a href="articles/schedule.html">給付金はいつ受け取れる？申請のタイミングと期限</a></li>
+      <li><a href="articles/zaishoku.html">働きながら給付金を使う場合のポイント</a></li>
+      <li><a href="articles/hikaku.html">RUNTEQとRareTECHを給付金の観点で比べる</a></li>
+    </ul>
+  </section>
+
   <section class="block" id="faq">
     <h2>よくある質問</h2>
     <details><summary>給付金はいつ受け取れますか？</summary>
@@ -268,7 +286,7 @@ footer p{margin:0 0 8px}
   <footer>
     <p>計算結果は目安です。実際に給付を受けられるかどうかや金額は、お住まいの地域を管轄するハローワークで確認してください。仕事を辞めた方で、妊娠・出産・育児・病気などで受講を始められない期間があった場合は、対象期間を延長できることがあります。</p>
     <p>参考：<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/kyouiku.html" rel="noopener">厚生労働省「教育訓練給付金」</a>／<a href="https://www.hellowork.mhlw.go.jp/insurance/insurance_education.html" rel="noopener">ハローワーク「教育訓練給付金」</a>／各スクールの料金は公式サイトの掲載（2026年10月17日時点）</p>
-    <p>運営：immolab（個人運営）</p>
+    <p>運営：immolab（個人運営）／<a href="about.html">運営者情報・このサイトの方針</a>／<a href="articles/index.html">解説記事の一覧</a></p>
   </footer>
 </div>
 
