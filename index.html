@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ITスクール給付金 実質負担チェック｜専門実践教育訓練給付金でいくらになる？</title>
+<meta name="description" content="専門実践教育訓練給付金を使うと、ITスクールの受講料は実質いくらになるのか。4つの質問で対象かどうかと、給付率50%・70%・80%ごとの実質負担額を計算します。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=BIZ+UDPGothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef3f1;
+  --paper:#ffffff;
+  --ink:#172624;
+  --muted:#566663;
+  --line:#cfd9d6;
+  --green:#0b7a5f;
+  --green-soft:#e1f1ec;
+  --warn:#9b3f17;
+  --warn-soft:#f8e9e1;
+  --focus:#1f5fbf;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"BIZ UDPGothic",system-ui,sans-serif;
+  font-size:16px;line-height:1.75;
+}
+a{color:var(--green)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.wrap{max-width:680px;margin:0 auto;padding:0 16px}
+.pr{font-size:.8rem;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line)}
+.site{display:flex;flex-wrap:wrap;gap:2px 16px;justify-content:space-between;align-items:baseline;padding:14px 0 0;font-size:.9rem;color:var(--muted)}
+@media(max-width:480px){.slip td:first-child{font-size:.88rem}.slip .big td{font-size:1rem}.slip .big .net{font-size:1.25rem}}
+.site b{color:var(--ink)}
+
+/* hero */
+.hero{padding:28px 0 8px}
+.hero h1{font-size:clamp(1.6rem,6vw,2.3rem);line-height:1.3;margin:0 0 14px;letter-spacing:.01em}
+.hero p{margin:0;color:var(--muted);max-width:36em}
+
+/* calculator */
+.calc{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin:24px 0;padding:22px 18px}
+.q{border:0;margin:0 0 22px;padding:0}
+.q legend{font-weight:700;margin-bottom:10px;padding:0}
+.q .hint{display:block;font-weight:400;font-size:.85rem;color:var(--muted)}
+.opts{display:grid;gap:8px}
+@media(min-width:560px){.opts.two{grid-template-columns:1fr 1fr}}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;inset:0}
+.opt span{
+  display:block;padding:11px 14px;border:1.5px solid var(--line);border-radius:6px;
+  background:#fbfdfc;cursor:pointer;line-height:1.5
+}
+.opt input:checked+span{border-color:var(--green);background:var(--green-soft);font-weight:700}
+.opt input:focus-visible+span{outline:3px solid var(--focus);outline-offset:2px}
+.fee-row{display:grid;grid-template-columns:1fr 9rem;gap:10px}
+.field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+.field input,.field select{
+  width:100%;font:inherit;padding:10px 12px;border:1.5px solid var(--line);border-radius:6px;background:#fbfdfc;color:var(--ink)
+}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.presets button{
+  font:inherit;font-size:.85rem;padding:6px 10px;border-radius:999px;border:1px solid var(--line);
+  background:#fff;color:var(--ink);cursor:pointer
+}
+.presets button:hover{border-color:var(--green)}
+.go{
+  display:block;width:100%;margin-top:6px;font:inherit;font-weight:700;font-size:1.05rem;
+  padding:14px;border:0;border-radius:6px;background:var(--green);color:#fff;cursor:pointer
+}
+.err{color:var(--warn);font-size:.9rem;margin:8px 0 0;min-height:1.2em}
+
+/* result: a settlement slip */
+.result{margin:0 0 28px}
+.verdict{border-radius:6px;padding:14px 16px;margin-bottom:14px}
+.verdict.ok{background:var(--green-soft);border:1px solid #b7dccf}
+.verdict.ng{background:var(--warn-soft);border:1px solid #e8c6b5}
+.verdict h2{font-size:1.15rem;margin:0 0 4px}
+.verdict p{margin:0;font-size:.95rem}
+.slip{
+  background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px 18px 16px;
+  font-family:"BIZ UDGothic",monospace;font-variant-numeric:tabular-nums;
+  background-image:radial-gradient(circle at 8px -2px,var(--bg) 7px,transparent 7.5px);
+  background-size:16px 10px;background-repeat:repeat-x;background-position:0 100%;
+}
+.slip h3{font-family:"BIZ UDPGothic",sans-serif;font-size:1rem;margin:0 0 12px}
+.slip table{width:100%;border-collapse:collapse;font-size:.95rem}
+.slip td{padding:7px 0;vertical-align:top}
+.slip td:last-child{text-align:right;white-space:nowrap;padding-left:12px}
+.slip tr.fee td{border-bottom:1px dashed var(--line)}
+.slip .stage td{border-bottom:1px dashed var(--line)}
+.slip .stage small{display:block;font-family:"BIZ UDPGothic",sans-serif;color:var(--muted);font-size:.8rem;line-height:1.5}
+.slip .net{font-weight:700;color:var(--green)}
+.slip .big td{font-size:1.15rem;padding-top:12px}
+.slip .big .net{font-size:1.5rem}
+.slip-note{font-family:"BIZ UDPGothic",sans-serif;font-size:.82rem;color:var(--muted);margin:12px 0 0;line-height:1.6}
+
+/* schools */
+section.block{padding:8px 0 24px}
+section.block h2{font-size:1.3rem;margin:16px 0 6px}
+section.block>p{margin:0 0 14px;color:var(--muted)}
+.school{background:var(--paper);border-left:4px solid var(--green);padding:18px;margin-bottom:14px;border-radius:0 6px 6px 0}
+.school h3{margin:0 0 2px;font-size:1.15rem}
+.school .course{color:var(--muted);font-size:.9rem;margin:0 0 10px}
+.school dl{display:grid;grid-template-columns:7.5em 1fr;gap:4px 10px;margin:0 0 12px;font-size:.95rem}
+.school dt{color:var(--muted)}
+.school dd{margin:0}
+.school dd.net{font-weight:700;color:var(--green)}
+.school p{margin:0 0 12px;font-size:.95rem}
+.cta{
+  display:inline-block;padding:11px 18px;border-radius:6px;background:var(--ink);color:#fff;
+  text-decoration:none;font-weight:700
+}
+.cta[aria-disabled="true"]{background:#8a9693;pointer-events:none}
+
+/* faq */
+details{background:var(--paper);border:1px solid var(--line);border-radius:6px;margin-bottom:8px}
+summary{cursor:pointer;padding:12px 16px;font-weight:700}
+details p{margin:0;padding:0 16px 14px;font-size:.95rem}
+
+footer{border-top:1px solid var(--line);padding:20px 0 40px;font-size:.85rem;color:var(--muted)}
+footer p{margin:0 0 8px}
+@media (prefers-reduced-motion:no-preference){
+  .result.show{animation:rise .35s ease-out}
+  @keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="pr">このページには広告（アフィリエイトリンク）が含まれます。紹介先のスクールから報酬を受け取ることがありますが、計算結果には影響しません。</p>
+  <div class="site"><b>ITスクール給付金 実質負担チェック</b><span>情報確認日：2026年10月17日</span></div>
+
+  <header class="hero">
+    <h1>そのITスクール、給付金を使うと実質いくら？</h1>
+    <p>厚生労働省の「専門実践教育訓練給付金」は、条件を満たすと受講料の最大80%（年間上限64万円）が支給される制度です。4つの質問に答えると、対象になりそうか、実質いくらになるかを計算します。</p>
+  </header>
+
+  <form class="calc" id="calc" novalidate>
+    <fieldset class="q">
+      <legend>1. 今の状況に近いものは？</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="status" value="employed"><span>会社員・パートなどで、雇用保険に入って働いている</span></label>
+        <label class="opt"><input type="radio" name="status" value="leftWithin"><span>仕事を辞めて1年以内</span></label>
+        <label class="opt"><input type="radio" name="status" value="leftOver"><span>仕事を辞めて1年以上たっている</span></label>
+        <label class="opt"><input type="radio" name="status" value="none"><span>雇用保険に入っていない（自営業・フリーランスなど）</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q">
+      <legend>2. 雇用保険に入っていた期間は、通算でどのくらい？<span class="hint">転職していても、間が1年以内なら合算できます</span></legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="period" value="lt2"><span>2年未満</span></label>
+        <label class="opt"><input type="radio" name="period" value="2to3"><span>2年以上3年未満</span></label>
+        <label class="opt"><input type="radio" name="period" value="ge3"><span>3年以上</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q">
+      <legend>3. 教育訓練給付金を受け取ったことはある？</legend>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="prior" value="never"><span>ない</span></label>
+        <label class="opt"><input type="radio" name="prior" value="over3"><span>ある（受講開始の3年以上前）</span></label>
+        <label class="opt"><input type="radio" name="prior" value="within3"><span>ある（3年以内）</span></label>
+      </div>
+    </fieldset>
+
+    <fieldset class="q">
+      <legend>4. 検討している講座の受講料と期間は？</legend>
+      <div class="fee-row">
+        <div class="field">
+          <label for="fee">受講料（税込・円）</label>
+          <input id="fee" name="fee" inputmode="numeric" placeholder="例：657000" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="years">期間</label>
+          <select id="years" name="years">
+            <option value="1">1年以内</option>
+            <option value="2">1年超〜2年</option>
+            <option value="3">2年超〜3年</option>
+          </select>
+        </div>
+      </div>
+      <div class="presets" aria-label="講座の例を入れる">
+        <button type="button" data-fee="657000" data-years="1">RUNTEQ Web開発スタンダード（転職向け）</button>
+        <button type="button" data-fee="1320000" data-years="2">RareTECH 完全希少型（2年）</button>
+      </div>
+    </fieldset>
+
+    <button class="go" type="submit">実質負担を計算する</button>
+    <p class="err" id="err" role="alert"></p>
+  </form>
+
+  <div class="result" id="result" hidden aria-live="polite"></div>
+
+  <section class="block" id="schools">
+    <h2>給付金の対象講座があるスクール</h2>
+    <p>どちらも専門実践教育訓練給付金の対象講座があり、無料で相談できます。給付金が使えるかどうかや申請の流れも、相談のときに確認できます。</p>
+
+    <article class="school">
+      <h3>RUNTEQ（ランテック）</h3>
+      <p class="course">Web開発スタンダードコース（オンライン）</p>
+      <dl>
+        <dt>受講料</dt><dd>657,000円（転職向け）／577,000円（スキルアップ向け）</dd>
+        <dt>期間</dt><dd>5〜9ヶ月（学習時間1,000時間）</dd>
+        <dt>給付金80%なら</dt><dd class="net">実質131,400円（転職向けの場合）</dd>
+      </dl>
+      <p>未経験からWebエンジニアへの転職を目指すコースです。同じRUNTEQでもPython×AIコースは給付金の対象外なので注意してください。</p>
+      <a class="cta" data-school="runteq" href="#" aria-disabled="true">無料キャリア相談会を予約する</a>
+    </article>
+
+    <article class="school">
+      <h3>RareTECH（レアテック）</h3>
+      <p class="course">完全希少型コース（2年）／基本希少型コース（1年）</p>
+      <dl>
+        <dt>受講料</dt><dd>1,320,000円（完全希少型）</dd>
+        <dt>期間</dt><dd>2年（完全希少型）</dd>
+        <dt>給付金80%なら</dt><dd class="net">実質264,000円（完全希少型の場合）</dd>
+      </dl>
+      <p>2年かけてITの基礎から幅広く学ぶスクールです。2026年10月1日から給付金の対象講座になりました。基本希少型コースの料金は公式サイトで確認してください。</p>
+      <a class="cta" data-school="raretech" href="#" aria-disabled="true">無料カウンセリングを予約する</a>
+    </article>
+  </section>
+
+  <section class="block" id="faq">
+    <h2>よくある質問</h2>
+    <details><summary>給付金はいつ受け取れますか？</summary>
+      <p>受講料をいったん自分で支払い、受講中は6ヶ月ごと、修了後にも、本人がハローワークに申請して受け取ります。受講料から最初に値引きされる仕組みではありません。</p></details>
+    <details><summary>働きながらでも使えますか？</summary>
+      <p>使えます。雇用保険に入って働いている人も対象です。</p></details>
+    <details><summary>申し込む前にやることはありますか？</summary>
+      <p>まず「訓練前キャリアコンサルティング」を受けてジョブ・カードをもらい、それを受講開始日の2週間前までにハローワークへ提出して、受給資格の確認を受ける必要があります。受講開始日から逆算して、早めに準備してください。</p></details>
+    <details><summary>70%・80%になる条件は？</summary>
+      <p>70%は、修了後1年以内に資格を取るなどして、雇用保険に入って働いている場合です。80%は、それに加えて修了後の賃金が受講開始前より5%以上上がった場合です。</p></details>
+  </section>
+
+  <footer>
+    <p>計算結果は目安です。実際に給付を受けられるかどうかや金額は、お住まいの地域を管轄するハローワークで確認してください。仕事を辞めた方で、妊娠・出産・育児・病気などで受講を始められない期間があった場合は、対象期間を延長できることがあります。</p>
+    <p>参考：<a href="https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/jinzaikaihatsu/kyouiku.html" rel="noopener">厚生労働省「教育訓練給付金」</a>／<a href="https://www.hellowork.mhlw.go.jp/insurance/insurance_education.html" rel="noopener">ハローワーク「教育訓練給付金」</a>／各スクールの料金は公式サイトの掲載（2026年10月17日時点）</p>
+    <p>運営：immolab（個人運営）</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // 2024年10月以降に開講する専門実践教育訓練の給付率と年間上限
+  var STAGES = [
+    {rate:.5, cap:400000, label:'受講中〜修了時（基本）', note:'受講していれば対象'},
+    {rate:.7, cap:560000, label:'修了後に就職などした場合', note:'修了後1年以内に資格取得などをして、雇用保険に入って働いている'},
+    {rate:.8, cap:640000, label:'さらに賃金が上がった場合', note:'修了後の賃金が受講開始前より5%以上アップ'}
+  ];
+  // アフィリエイトリンクは提携承認後にここへ入れる
+  var LINKS = {runteq:'', raretech:''};
+
+  var form = document.getElementById('calc');
+  var out = document.getElementById('result');
+  var err = document.getElementById('err');
+  var feeEl = document.getElementById('fee');
+  var yearsEl = document.getElementById('years');
+
+  document.querySelectorAll('.cta').forEach(function(a){
+    var url = LINKS[a.dataset.school];
+    if(url){a.href = url; a.removeAttribute('aria-disabled'); a.rel = 'sponsored noopener'; a.target = '_blank';}
+  });
+
+  document.querySelectorAll('.presets button').forEach(function(b){
+    b.addEventListener('click', function(){
+      feeEl.value = Number(b.dataset.fee).toLocaleString('ja-JP');
+      yearsEl.value = b.dataset.years;
+    });
+  });
+
+  function yen(n){return Math.round(n).toLocaleString('ja-JP') + '円';}
+  function val(name){var c = form.querySelector('input[name="'+name+'"]:checked'); return c ? c.value : null;}
+
+  function eligibility(status, period, prior){
+    if(status === 'none') return {ok:false, why:'雇用保険に入っていない期間は対象になりません。過去に入っていて、辞めてから1年以内なら「仕事を辞めて1年以内」を選んでください。'};
+    if(status === 'leftOver') return {ok:false, why:'仕事を辞めた翌日から1年を過ぎると、原則として対象外です。妊娠・出産・育児・病気などで延長できる場合があるので、ハローワークに確認してください。'};
+    if(prior === 'within3') return {ok:false, why:'前回の給付から3年たっていないため、今回は対象外です。'};
+    if(period === 'lt2') return {ok:false, why:'初めて受け取る場合でも、雇用保険に通算2年以上入っている必要があります。'};
+    if(period === '2to3' && prior === 'over3') return {ok:false, why:'2回目以降は、前回の受給後に雇用保険に通算3年以上入っている必要があります。'};
+    return {ok:true, why: status === 'leftWithin'
+      ? '条件に当てはまりそうです。辞めた翌日から1年以内に受講を始める必要があります。'
+      : '条件に当てはまりそうです。'};
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var status = val('status'), period = val('period'), prior = val('prior');
+    var fee = Number(String(feeEl.value).replace(/[^0-9]/g,''));
+    var years = Number(yearsEl.value);
+    if(!status || !period || !prior){ err.textContent = '1〜3の質問すべてに答えてください。'; return; }
+    if(!fee || fee < 10000){ err.textContent = '受講料を円で入力してください（例：657000）。'; feeEl.focus(); return; }
+    err.textContent = '';
+
+    var el = eligibility(status, period, prior);
+    var html = '<div class="verdict ' + (el.ok ? 'ok' : 'ng') + '"><h2>' +
+      (el.ok ? '給付金の対象になる可能性があります' : '今の条件では対象外の可能性が高いです') +
+      '</h2><p>' + el.why + '</p></div>';
+
+    html += '<div class="slip"><h3>' + (el.ok ? '実質負担の目安' : '参考：対象だった場合の実質負担') + '</h3><table>';
+    html += '<tr class="fee"><td>受講料</td><td>' + yen(fee) + '</td></tr>';
+    STAGES.forEach(function(s, i){
+      var paid = Math.min(fee * s.rate, s.cap * years);
+      var big = i === STAGES.length - 1 ? ' big' : '';
+      html += '<tr class="stage' + big + '"><td>給付' + Math.round(s.rate*100) + '%：' + s.label +
+        '<small>' + s.note + '／給付額 ' + yen(paid) + '</small></td><td class="net">実質 ' + yen(fee - paid) + '</td></tr>';
+    });
+    html += '</table><p class="slip-note">年間上限（50%は40万円、70%は56万円、80%は64万円）を期間の年数分として計算した目安です。給付金は受講後に本人が申請して受け取ります。</p></div>';
+
+    out.innerHTML = html;
+    out.hidden = false;
+    out.classList.remove('show'); void out.offsetWidth; out.classList.add('show');
+    out.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+  });
+})();
+</script>
+</body>
+</html>
